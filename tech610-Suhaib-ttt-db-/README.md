@@ -1,39 +1,44 @@
-# MongoDB Provisioning Script (AWS EC2 - Ubuntu 24.04)
+# MongoDB Database Provisioning Script (AWS EC2 - Ubuntu 24.04)
 
 <!--
 This project contains a Bash script used to automatically install and configure MongoDB
-on a fresh AWS EC2 Ubuntu 24.04 LTS instance for the TTT (Tic Tac Toe) application.
+on a fresh AWS EC2 Ubuntu 24.04 LTS instance.
 -->
 
 ---
 
 ## 📌 Project Overview
 
-This script provisions **MongoDB 8.2.5** for the TTT app on AWS EC2.
+This script provisions and configures a **MongoDB database server (8.2.5)** on AWS EC2.
 
-It automates:
-- System updates
-- MongoDB repository setup
-- MongoDB installation
-- Service startup
+It is designed for database setup and backend infrastructure preparation.
 
 ---
 
 ## ⚙️ What the script does
 
 - Updates system packages
-- Upgrades system packages
-- Installs dependencies (curl, gnupg)
-- Adds MongoDB GPG key
-- Adds MongoDB repository
-- Installs MongoDB
-- Starts and enables MongoDB service
+- Upgrades existing packages
+- Installs required dependencies (curl, gnupg)
+- Adds MongoDB GPG key for package verification
+- Adds MongoDB repository sources
+- Installs MongoDB database server
+- Starts MongoDB service
+- Enables MongoDB on system boot
+
+---
+
+## 🖥️ Requirements
+
+- AWS EC2 instance (Ubuntu 24.04 LTS)
+- Internet access
+- sudo privileges
 
 ---
 
 ## 📁 Files
 
-- `setup.sh` → Main MongoDB installation script
+- `setup.sh` → Main MongoDB database installation script
 
 ---
 
@@ -44,9 +49,11 @@ chmod +x setup.sh
 ./setup.sh
 
 
-💻 Code Preview (setup.sh)
 
-Below is the full Bash script used for MongoDB provisioning.
+
+#💻 Code Preview (setup.sh)
+
+Below is the full Bash script used to provision MongoDB.
 
 #! /bin/bash
 
@@ -54,7 +61,7 @@ Below is the full Bash script used for MongoDB provisioning.
 # TESTED: 06/07/2026
 # TESTED BY: Suhaib
 # TESTED ON: AWS
-# PURPOSE: Provision MongoDB 8.2.5 for TTT app
+# PURPOSE: Provision MongoDB database server (8.2.5)
 ########################################################
 
 # ----------------------------------------
@@ -99,7 +106,6 @@ echo "MongoDB repository added!"
 # ----------------------------------------
 # STEP 6: Refresh package list
 # ----------------------------------------
-echo "Updating package list..."
 sudo apt update -y
 echo "Done!"
 
@@ -133,6 +139,3 @@ sudo systemctl enable mongod
 # STEP 10: Check service status
 # ----------------------------------------
 sudo systemctl status mongod
-
-
-
