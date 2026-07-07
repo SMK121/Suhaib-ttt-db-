@@ -17,7 +17,7 @@ It is designed for database setup and backend infrastructure preparation for the
 
 ## ⚙️ What the script does
 
-The script automatically:
+The provisioning script automatically:
 
 - Updates system packages
 - Upgrades existing packages
@@ -25,7 +25,7 @@ The script automatically:
 - Adds MongoDB GPG key for package verification
 - Adds MongoDB repository sources
 - Installs MongoDB database server
-- Configures MongoDB remote access
+- Configures MongoDB remote access using `bindIp`
 - Starts MongoDB service
 - Enables MongoDB on system boot
 
@@ -49,19 +49,19 @@ The script automatically:
 
 By default, MongoDB only accepts connections from the local machine:
 
-```
+```text
 127.0.0.1
 ```
 
-To allow the Tic Tac Toe App VM to connect to the separate MongoDB Database VM, MongoDB must accept external connections.
+To allow the Tic Tac Toe App VM to connect to the separate MongoDB Database VM, MongoDB remote access was configured.
 
-The MongoDB configuration file was edited:
+The MongoDB configuration was updated automatically by the provisioning script using:
 
 ```bash
-sudo nano /etc/mongod.conf
+sudo sed -i 's/bindIp: 127.0.0.1/bindIp: 0.0.0.0/' /etc/mongod.conf
 ```
 
-The following setting was changed:
+The configuration change:
 
 Before:
 
@@ -79,23 +79,48 @@ This allows MongoDB to accept connections from external machines, such as the Ap
 
 MongoDB runs on:
 
-```
+```text
 Port: 27017
 ```
 
-After updating the configuration, MongoDB was restarted:
+After updating the configuration, MongoDB is started and enabled:
 
 ```bash
-sudo systemctl restart mongod
+sudo systemctl start mongod
+sudo systemctl enable mongod
 ```
 
-The service status was checked:
+The service status can be checked using:
 
 ```bash
 sudo systemctl status mongod
 ```
 
-The final configuration allows the Tic Tac Toe application running on the App VM to communicate with the MongoDB database server.
+---
+
+# 🔗 Application Database Connection
+
+The Tic Tac Toe application connects to the MongoDB Database VM using the `MONGODB_URI` environment variable.
+
+The connection was configured on the App VM:
+
+```bash
+export MONGODB_URI=mongodb://<DATABASE_PRIVATE_IP>:27017/tictactoe
+```
+
+Connection breakdown:
+
+- `<DATABASE_PRIVATE_IP>` → Private IP address of the MongoDB Database VM
+- `27017` → MongoDB default port
+- `tictactoe` → Application database name
+
+After setting the environment variable, PM2 was restarted so the application could reload the database connection:
+
+```bash
+pm2 restart all
+```
+
+This allows the Tic Tac Toe application running on the App VM to communicate with the MongoDB database server.
 
 ---
 
@@ -128,7 +153,7 @@ Below is the full Bash script used to provision MongoDB.
 ## AIM: Work as a script + user data on a fresh Ubuntu 24.04 LTS VM
 ## Purpose: Provision MongoDB 8.2.5 for TTT app
 
-...
+[Full script here]
 ```
 
 ---
@@ -151,4 +176,5 @@ Expected result:
 
 - MongoDB service running
 - MongoDB listening on port 27017
-- App VM able to connect using the database private IP
+- MongoDB accepts connections from the App VM
+- Tic Tac Toe application connects using `MONGODB_URI`
