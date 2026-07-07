@@ -132,3 +132,16 @@ sudo systemctl enable mongod
 # STEP 8: Check MongoDB service status
 # --------------------------------------------
 sudo systemctl status mongod
+
+
+
+## 🌐 MongoDB Network Configuration
+
+By default, MongoDB only accepts connections from the local machine (`127.0.0.1`).
+
+To allow the Tic Tac Toe App VM to connect to the separate MongoDB Database VM, the MongoDB network configuration was updated.
+
+The MongoDB configuration file was edited using:
+
+```bash
+sudo nano /etc/mongod.conf
