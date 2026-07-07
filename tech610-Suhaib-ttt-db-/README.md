@@ -42,6 +42,54 @@ It is designed for database setup and backend infrastructure preparation.
 
 ---
 
+## 🌐 MongoDB Network Configuration
+
+
+
+By default, MongoDB only accepts connections from the local machine (`127.0.0.1`).
+
+
+
+To allow the Tic Tac Toe App VM to connect to the separate MongoDB Database VM, the MongoDB network configuration was updated.
+
+
+
+The MongoDB configuration file was edited using:
+
+
+
+```bash
+
+sudo nano /etc/mongod.conf
+
+The following setting was changed:
+
+Before:
+bindIp: 127.0.0.1
+
+After:
+bindIp: 0.0.0.0
+
+This allows MongoDB to accept connections from external machines, such as the App VM.
+
+MongoDB runs on:
+Port: 27017
+
+After making the change, MongoDB was restarted:
+sudo systemctl restart mongod
+
+The service status was checked using:
+sudo systemctl status mongod
+
+The final configuration allows the Tic Tac Toe application running on the App VM to communicate with the MongoDB database server.
+
+
+
+
+
+
+
+
 ## 🚀 How to run
 
 ```bash
@@ -135,40 +183,5 @@ sudo systemctl status mongod
 
 
 
-## 🌐 MongoDB Network Configuration
-
-By default, MongoDB only accepts connections from the local machine (`127.0.0.1`).
-
-To allow the Tic Tac Toe App VM to connect to the separate MongoDB Database VM, the MongoDB network configuration was updated.
-
-The MongoDB configuration file was edited using:
-
-```bash
-sudo nano /etc/mongod.conf
 
 
-The following setting was changed:
-
-Before:
-
-bindIp: 127.0.0.1
-
-After:
-
-bindIp: 0.0.0.0
-
-This allows MongoDB to accept connections from external machines, such as the App VM.
-
-MongoDB runs on:
-
-Port: 27017
-
-After making the change, MongoDB was restarted:
-
-sudo systemctl restart mongod
-
-The service status was checked using:
-
-sudo systemctl status mongod
-
-The final configuration allows the Tic Tac Toe application running on the App VM to communicate with the MongoDB database server.
