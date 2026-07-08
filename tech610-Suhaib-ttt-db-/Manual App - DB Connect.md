@@ -1,5 +1,3 @@
----
-
 # 🔌 Manual App VM → MongoDB Database VM Connection
 
 After configuring MongoDB for remote access, the Tic Tac Toe application VM was manually connected to the MongoDB Database VM.
