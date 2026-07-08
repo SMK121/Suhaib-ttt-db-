@@ -178,3 +178,22 @@ Expected result:
 - MongoDB listening on port 27017
 - MongoDB accepts connections from the App VM
 - Tic Tac Toe application connects using `MONGODB_URI`
+
+
+
+---
+
+# 🖥️ Manual Application to Database Connection Setup
+
+After provisioning the MongoDB Database VM, the Tic Tac Toe application was manually configured on the separate App VM to connect to the database.
+
+The App VM and MongoDB VM communicate using the AWS private network.
+
+---
+
+## 1. Connect to the App VM
+
+SSH into the application EC2 instance:
+
+```bash
+ssh -i <key.pem> ubuntu@<APP_PUBLIC_IP>
