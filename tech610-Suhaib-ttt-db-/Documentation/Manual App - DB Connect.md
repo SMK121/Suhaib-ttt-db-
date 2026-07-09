@@ -260,3 +260,7 @@ Completed setup:
 
 The application successfully communicates with MongoDB and stores data externally from the application server.
 
+
+<img width="1678" height="1532" alt="image" src="https://github.com/user-attachments/assets/5533febe-1421-46dd-a3aa-c0b8e2e4131f" />
+
+
