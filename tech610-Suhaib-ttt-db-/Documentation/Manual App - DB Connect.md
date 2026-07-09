@@ -2,7 +2,7 @@
 
 # 🔌 Manual App VM → MongoDB Database VM Connection
 
-After configuring MongoDB for remote access, the Tic Tac Toe application VM was manually connected to the MongoDB Database VM.
+After configuring MongoDB for remote access, the Tic Tac Toe application VM was manually connected to the MongoDB Database VM
 
 The application and database are running on separate EC2 instances:
 ```
@@ -64,6 +64,7 @@ Connection to 172.31.56.200 27017 port [tcp/*] succeeded!
 
 This confirms:
 * MongoDB server is reachable
+  
 * Port 27017 is open
 * Network communication between EC2 instances works
 
